@@ -7,7 +7,7 @@ A deliberately small TypeScript monorepo for building a Vite web application and
 - pnpm workspaces and Turborepo
 - Effect v4 (Smol) HTTP API
 - Vite and React
-- TanStack Query
+- Effect Atom and `@effect/atom-react`
 - Base UI with CSS Modules and CSS custom properties
 - Vitest and `@effect/vitest`
 
@@ -29,11 +29,12 @@ Both `apps/*` and `packages/*` are workspace packages. Internal dependencies use
 ## Runtime model
 
 - `apps/api/src/main.ts` is the only server execution edge. It launches one root layer and lets Effect own process signals and resource cleanup.
-- `apps/web/src/effect_runtime.ts` owns one managed browser runtime. Promise-based libraries cross into Effect through that module.
+- `apps/web/src/api_client.ts` defines the browser HTTP client as an `AtomHttpApi.Service`. Effect Atom builds its layer and exposes typed query and mutation atoms.
+- `apps/web/src/app/app_providers.tsx` owns the React `RegistryProvider`, which scopes atom state, running fibers, and cleanup to the application.
 - `packages/http_api` describes the HTTP interface but never creates or runs a runtime.
 - `packages/ui` has no Effect dependency.
 
-Create and compose Effects inside application code. Run them only at application edges such as `main.ts`, TanStack Query functions, or tests.
+Create and compose Effects inside application code. Run them only at application edges such as `main.ts`, Effect Atom integrations, or tests.
 
 ## Getting started
 

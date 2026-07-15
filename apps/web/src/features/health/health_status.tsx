@@ -1,28 +1,28 @@
+import { useAtomRefresh, useAtomValue } from "@effect/atom-react";
 import { Button } from "@repo/ui/button";
-import { useQuery } from "@tanstack/react-query";
-import { healthQueryOptions } from "./health_queries";
+import { healthAtom } from "./health_atoms";
 import styles from "./health_status.module.css";
 
 export function HealthStatus() {
-  const health = useQuery(healthQueryOptions());
+  const health = useAtomValue(healthAtom);
+  const refreshHealth = useAtomRefresh(healthAtom);
 
-  if (health.isPending) {
-    return <p className={styles.pending}>Checking the API…</p>;
+  switch (health._tag) {
+    case "Initial":
+      return <p className={styles.pending}>Checking the API…</p>;
+    case "Failure":
+      return (
+        <div className={styles.error} role="alert">
+          <p>The API could not be reached.</p>
+          <Button onClick={refreshHealth}>Try again</Button>
+        </div>
+      );
+    case "Success":
+      return (
+        <p className={styles.healthy}>
+          <span className={styles.indicator} aria-hidden="true" />
+          API status: {health.value.status}
+        </p>
+      );
   }
-
-  if (health.isError) {
-    return (
-      <div className={styles.error} role="alert">
-        <p>The API could not be reached.</p>
-        <Button onClick={() => void health.refetch()}>Try again</Button>
-      </div>
-    );
-  }
-
-  return (
-    <p className={styles.healthy}>
-      <span className={styles.indicator} aria-hidden="true" />
-      API status: {health.data.status}
-    </p>
-  );
 }

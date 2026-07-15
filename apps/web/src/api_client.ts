@@ -1,11 +1,12 @@
+import { BrowserHttpClient } from "@effect/platform-browser";
 import { AppApi } from "@repo/http-api";
-import { Effect } from "effect";
-import { HttpApiClient } from "effect/unstable/httpapi";
-import { effectRuntime } from "./effect_runtime";
+import { AtomHttpApi } from "effect/unstable/reactivity";
 
-const healthRequest = HttpApiClient.make(AppApi, {
-  baseUrl: globalThis.location.origin,
-}).pipe(Effect.flatMap((client) => client.health.check()));
-
-export const getHealth = (signal?: AbortSignal) =>
-  effectRuntime.runPromise(healthRequest, { signal });
+export class AppApiClient extends AtomHttpApi.Service<AppApiClient>()(
+  "AppApiClient",
+  {
+    api: AppApi,
+    baseUrl: globalThis.location.origin,
+    httpClient: BrowserHttpClient.layerFetch,
+  },
+) {}
