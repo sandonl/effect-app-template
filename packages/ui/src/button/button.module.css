@@ -1,0 +1,36 @@
+.root {
+  align-items: center;
+  background: var(--color-accent);
+  border: 0;
+  border-radius: var(--radius-small);
+  color: var(--color-accent-contrast);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-weight: 650;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0.55rem 0.9rem;
+  transition:
+    filter 120ms ease,
+    transform 120ms ease;
+}
+
+.root:hover {
+  filter: brightness(1.08);
+}
+
+.root:active {
+  transform: translateY(1px);
+}
+
+.root:focus-visible {
+  outline: 0.18rem solid
+    color-mix(in srgb, var(--color-accent) 42%, transparent);
+  outline-offset: 0.15rem;
+}
+
+.root:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}

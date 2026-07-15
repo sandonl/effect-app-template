@@ -1,0 +1,45 @@
+.shell {
+  display: grid;
+  min-height: 100vh;
+  padding: 2rem;
+  place-items: center;
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-small);
+  max-width: 42rem;
+  padding: clamp(1.75rem, 5vw, 3.5rem);
+  width: 100%;
+}
+
+.card h1 {
+  font-size: clamp(2.2rem, 7vw, 4.5rem);
+  letter-spacing: -0.055em;
+  line-height: 0.95;
+  margin: 0;
+}
+
+.eyebrow {
+  color: var(--color-accent);
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  margin: 0 0 1.15rem;
+  text-transform: uppercase;
+}
+
+.description {
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  line-height: 1.65;
+  margin: 1.5rem 0 0;
+}
+
+.status {
+  border-top: 1px solid var(--color-border);
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+}

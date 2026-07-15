@@ -1,0 +1,32 @@
+.pending {
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.healthy {
+  align-items: center;
+  display: flex;
+  font-weight: 650;
+  gap: 0.65rem;
+  margin: 0;
+}
+
+.indicator {
+  background: var(--color-accent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 0.25rem
+    color-mix(in srgb, var(--color-accent) 18%, transparent);
+  height: 0.7rem;
+  width: 0.7rem;
+}
+
+.error {
+  color: var(--color-danger);
+  display: grid;
+  gap: 1rem;
+  justify-items: start;
+}
+
+.error p {
+  margin: 0;
+}
