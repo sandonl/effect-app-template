@@ -36,6 +36,16 @@ Both `apps/*` and `packages/*` are workspace packages. Internal dependencies use
 
 Create and compose Effects inside application code. Run them only at application edges such as `main.ts`, Effect Atom integrations, or tests.
 
+## Template boundaries
+
+This repository is ready as a minimal application template. It intentionally provides one complete read path rather than preselecting application architecture that every product may not need.
+
+- The web application is a browser-only SPA. SSR, routing, and hydration are not configured.
+- Effect Atom owns request state, but the template does not impose retry, polling, focus-refetch, or long-lived cache policies.
+- The health endpoint demonstrates a query. Add mutation and reactivity-key invalidation only when the first write use case exists.
+- Authentication, persistence, observability, deployment, and CI remain application decisions.
+- Effect v4 and its Atom APIs are still beta/unstable. Upgrade all centrally pinned Effect packages together and verify the full workspace.
+
 ## Getting started
 
 The repository pins Node and pnpm versions. Use Corepack for every pnpm command.

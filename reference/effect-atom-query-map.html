@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Effect Atom query map</title>
+    <link rel="stylesheet" href="../assets/lesson.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <p class="eyebrow">Quick reference</p>
+        <h1>Effect Atom query map</h1>
+        <p class="lede">
+          The smallest coherent path from a shared Effect HTTP API contract to
+          rendered React state.
+        </p>
+      </header>
+
+      <table class="comparison">
+        <thead>
+          <tr>
+            <th>Concern</th>
+            <th>Owner</th>
+            <th>This repository</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Schema and endpoint</td>
+            <td>Shared HTTP API package</td>
+            <td><code>packages/http_api/src/health_api.ts</code></td>
+          </tr>
+          <tr>
+            <td>Browser transport</td>
+            <td>Atom HTTP API service</td>
+            <td><code>apps/web/src/api_client.ts</code></td>
+          </tr>
+          <tr>
+            <td>Request identity</td>
+            <td>Query atom</td>
+            <td><code>features/health/health_atoms.ts</code></td>
+          </tr>
+          <tr>
+            <td>State and lifecycle</td>
+            <td>Atom registry</td>
+            <td><code>app/app_providers.tsx</code></td>
+          </tr>
+          <tr>
+            <td>Rendering</td>
+            <td>Feature component</td>
+            <td><code>features/health/health_status.tsx</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Adding a read endpoint</h2>
+      <ol>
+        <li>Add its schemas and endpoint to the shared HTTP API.</li>
+        <li>Implement the server handler against that same contract.</li>
+        <li>Create a feature atom with <code>AppApiClient.query</code>.</li>
+        <li>Read it with <code>useAtomValue</code>.</li>
+        <li>Render every relevant <code>AsyncResult</code> case.</li>
+      </ol>
+
+      <h2>Guardrails</h2>
+      <ul>
+        <li>
+          Do not call <code>Effect.runPromise</code> in feature components.
+        </li>
+        <li>Do not create a runtime per request or component render.</li>
+        <li>Do not duplicate the same remote state in two cache systems.</li>
+        <li>Do not treat Atom TTL as TanStack Query stale time.</li>
+        <li>Do pin all Effect v4 packages to one compatible version.</li>
+      </ul>
+
+      <h2>Choosing the other path</h2>
+      <p>
+        Prefer TanStack Query when most clients are Promise-native, its cache
+        policy and devtools are central product needs, or Effect is only an
+        isolated implementation detail. In that design, keep one application
+        <code>ManagedRuntime</code> and one explicit Effect-to-Promise adapter.
+      </p>
+
+      <footer>
+        <p>
+          Return to
+          <a href="../lessons/0001-one-owner-for-async-state.html"
+            >Lesson 0001</a
+          >
+          for the reasoning behind this map.
+        </p>
+      </footer>
+    </main>
+  </body>
+</html>
