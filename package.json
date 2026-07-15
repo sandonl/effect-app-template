@@ -9,6 +9,8 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "dev:api": "turbo run dev --filter=@repo/api",
+    "dev:web": "turbo run dev --filter=@repo/web",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "turbo run lint",

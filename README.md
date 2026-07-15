@@ -46,6 +46,8 @@ corepack pnpm dev
 
 The web application runs at `http://localhost:5173`. Vite proxies `/api` requests to the Effect server at `http://localhost:3000`.
 
+The root `dev` command uses Turbo to run every workspace package that declares a persistent `dev` task. Run one application through the same task graph with `corepack pnpm dev:web` or `corepack pnpm dev:api`.
+
 ## Commands
 
 ```sh

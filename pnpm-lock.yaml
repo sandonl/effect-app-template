@@ -149,9 +149,6 @@ importers:
       "@tanstack/react-query":
         specifier: "catalog:"
         version: 5.101.2(react@19.2.7)
-      "@tanstack/react-query-devtools":
-        specifier: "catalog:"
-        version: 5.101.2(@tanstack/react-query@5.101.2(react@19.2.7))(react@19.2.7)
       effect:
         specifier: 4.0.0-beta.98
         version: 4.0.0-beta.98
@@ -162,6 +159,9 @@ importers:
         specifier: "catalog:"
         version: 19.2.7(react@19.2.7)
     devDependencies:
+      "@tanstack/react-query-devtools":
+        specifier: "catalog:"
+        version: 5.101.2(@tanstack/react-query@5.101.2(react@19.2.7))(react@19.2.7)
       "@types/node":
         specifier: "catalog:"
         version: 26.1.1

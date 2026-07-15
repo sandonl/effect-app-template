@@ -1,20 +1,11 @@
 import { AppApi } from "@repo/http-api";
+import { Effect } from "effect";
 import { HttpApiClient } from "effect/unstable/httpapi";
 import { effectRuntime } from "./effect_runtime";
 
-const makeClient = () =>
-  effectRuntime.runPromise(
-    HttpApiClient.make(AppApi, {
-      baseUrl: globalThis.location.origin,
-    }),
-  );
+const healthRequest = HttpApiClient.make(AppApi, {
+  baseUrl: globalThis.location.origin,
+}).pipe(Effect.flatMap((client) => client.health.check()));
 
-let client: ReturnType<typeof makeClient> | undefined;
-
-const getClient = () => (client ??= makeClient());
-
-export async function getHealth(signal?: AbortSignal) {
-  const apiClient = await getClient();
-
-  return effectRuntime.runPromise(apiClient.health.check(), { signal });
-}
+export const getHealth = (signal?: AbortSignal) =>
+  effectRuntime.runPromise(healthRequest, { signal });
