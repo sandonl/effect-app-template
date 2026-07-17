@@ -8,6 +8,7 @@ A deliberately small TypeScript monorepo for building a Vite web application and
 - Effect v4 (Smol) HTTP API
 - Vite and React
 - Effect Atom and `@effect/atom-react`
+- Alchemy v2 infrastructure as Effect
 - Base UI with CSS Modules and CSS custom properties
 - Vitest and `@effect/vitest`
 
@@ -22,6 +23,7 @@ apps/
 packages/
 ├── http_api/            Shared schemas and HTTP endpoint descriptions
 └── ui/                  Styled Base UI wrappers and design tokens
+alchemy.run.ts            Optional infrastructure composition root
 ```
 
 Both `apps/*` and `packages/*` are workspace packages. Internal dependencies use `workspace:*`; shared external versions use `catalog:`.
@@ -59,6 +61,25 @@ The web application runs at `http://localhost:5173`. Vite proxies `/api` request
 
 The root `dev` command uses Turbo to run every workspace package that declares a persistent `dev` task. Run one application through the same task graph with `corepack pnpm dev:web` or `corepack pnpm dev:api`.
 
+## Infrastructure example
+
+[Alchemy v2](https://alchemy.run/) is installed at the workspace root and exactly pinned alongside Effect. [`alchemy.run.ts`](./alchemy.run.ts) is an opt-in example Stack containing one Cloudflare R2 bucket and local Alchemy state. Declaring or importing the Stack does not provision it, and none of the normal install, dev, build, test, or typecheck commands run Alchemy deployment commands.
+
+Preview what the example would change without applying it:
+
+```sh
+corepack pnpm infra:plan
+```
+
+Only when you intentionally want to create the example resource, authenticate with the provider and deploy it:
+
+```sh
+corepack pnpm exec alchemy login alchemy.run.ts
+corepack pnpm infra:deploy
+```
+
+Remove the example resource with `corepack pnpm infra:destroy`. Replace the example Stack with application-specific infrastructure before using it for a real deployment. Alchemy stores local state under the ignored `.alchemy/` directory; production projects should choose an appropriate remote state store and stage strategy.
+
 ## Commands
 
 ```sh
@@ -67,6 +88,7 @@ corepack pnpm typecheck
 corepack pnpm lint
 corepack pnpm test
 corepack pnpm format
+corepack pnpm infra:plan
 ```
 
 Copy `.env.example` to `.env` when local server configuration diverges from the defaults.

@@ -13,12 +13,18 @@
     "dev:web": "turbo run dev --filter=@repo/web",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "turbo run lint",
+    "infra:deploy": "alchemy deploy",
+    "infra:destroy": "alchemy destroy",
+    "infra:plan": "alchemy plan",
+    "lint": "eslint alchemy.run.ts && turbo run lint",
     "test": "turbo run test",
-    "typecheck": "turbo run typecheck"
+    "typecheck": "tsc --noEmit --project tsconfig.infra.json && turbo run typecheck"
   },
   "devDependencies": {
+    "@effect/platform-node": "catalog:",
     "@eslint/js": "catalog:",
+    "alchemy": "catalog:",
+    "effect": "catalog:",
     "eslint": "catalog:",
     "eslint-plugin-react-hooks": "catalog:",
     "eslint-plugin-react-refresh": "catalog:",
