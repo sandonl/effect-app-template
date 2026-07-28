@@ -18,19 +18,22 @@ Effect Smol is experimental. Its packages are pinned to one exact beta through t
 
 ```text
 apps/
-├── api/                 Effect HTTP server and Node composition root
+├── api/                 Effect HTTP API and local Node adapter
 └── web/                 Vite React application and browser composition root
+infrastructure/           Cloudflare runtime adapters
 packages/
 ├── http_api/            Shared schemas and HTTP endpoint descriptions
 └── ui/                  Styled Base UI wrappers and design tokens
-alchemy.run.ts            Optional infrastructure composition root
+alchemy.run.ts            Cloudflare deployment composition root
 ```
 
 Both `apps/*` and `packages/*` are workspace packages. Internal dependencies use `workspace:*`; shared external versions use `catalog:`.
 
 ## Runtime model
 
-- `apps/api/src/main.ts` is the only server execution edge. It launches one root layer and lets Effect own process signals and resource cleanup.
+- `apps/api/src/api_layer.ts` composes the platform-neutral HTTP API and handlers.
+- `apps/api/src/main.ts` is the local Node execution edge. It launches one root layer and lets Effect own process signals and resource cleanup.
+- `infrastructure/cloudflare_api.ts` adapts that same API layer to a Cloudflare Worker's `fetch` interface.
 - `apps/web/src/api_client.ts` defines the browser HTTP client as an `AtomHttpApi.Service`. Effect Atom builds its layer and exposes typed query and mutation atoms.
 - `apps/web/src/app/app_providers.tsx` owns the React `RegistryProvider`, which scopes atom state, running fibers, and cleanup to the application.
 - `packages/http_api` describes the HTTP interface but never creates or runs a runtime.
@@ -45,7 +48,7 @@ This repository is ready as a minimal application template. It intentionally pro
 - The web application is a browser-only SPA. SSR, routing, and hydration are not configured.
 - Effect Atom owns request state, but the template does not impose retry, polling, focus-refetch, or long-lived cache policies.
 - The health endpoint demonstrates a query. Add mutation and reactivity-key invalidation only when the first write use case exists.
-- Authentication, persistence, observability, deployment, and CI remain application decisions.
+- Cloudflare is the default deployment provider. Authentication, persistence, observability, custom domains, and CI remain application decisions.
 - Effect v4 and its Atom APIs are still beta/unstable. Upgrade all centrally pinned Effect packages together and verify the full workspace.
 
 ## Getting started
@@ -61,24 +64,30 @@ The web application runs at `http://localhost:5173`. Vite proxies `/api` request
 
 The root `dev` command uses Turbo to run every workspace package that declares a persistent `dev` task. Run one application through the same task graph with `corepack pnpm dev:web` or `corepack pnpm dev:api`.
 
-## Infrastructure example
+## Cloudflare deployment
 
-[Alchemy v2](https://alchemy.run/) is installed at the workspace root and exactly pinned alongside Effect. [`alchemy.run.ts`](./alchemy.run.ts) is an opt-in example Stack containing one Cloudflare R2 bucket and local Alchemy state. Declaring or importing the Stack does not provision it, and none of the normal install, dev, build, test, or typecheck commands run Alchemy deployment commands.
+[Alchemy v2](https://alchemy.run/) is installed at the workspace root and exactly pinned alongside Effect. [`alchemy.run.ts`](./alchemy.run.ts) is the deployment composition root. It deploys the Effect HTTP API as a Cloudflare Worker and the Vite SPA as a Cloudflare Website, with Cloudflare-backed Alchemy state.
 
-Preview what the example would change without applying it:
+Normal install, local development, build, test, and typecheck commands never provision cloud resources. Local development remains provider-independent:
 
 ```sh
-corepack pnpm infra:plan
+corepack pnpm dev
 ```
 
-Only when you intentionally want to create the example resource, authenticate with the provider and deploy it:
+To use Cloudflare-backed development or deployment, authenticate Alchemy once, then explicitly run the relevant command:
 
 ```sh
 corepack pnpm exec alchemy login alchemy.run.ts
-corepack pnpm infra:deploy
+corepack pnpm cloudflare:dev
+corepack pnpm plan
+corepack pnpm deploy
 ```
 
-Remove the example resource with `corepack pnpm infra:destroy`. Replace the example Stack with application-specific infrastructure before using it for a real deployment. Alchemy stores local state under the ignored `.alchemy/` directory; production projects should choose an appropriate remote state store and stage strategy.
+Remove deployed resources with `corepack pnpm destroy`.
+
+The deployed API URL is passed to Vite as `VITE_API_URL`. This is public configuration embedded in the browser bundle, not a secret. Never put API tokens, account IDs, credentials, or other sensitive values in a `VITE_*` variable. Alchemy keeps provider profiles outside the repository in `~/.alchemy/profiles.json`; `.alchemy`, `.dev.vars*`, `.wrangler`, and local environment files are ignored.
+
+The template permits cross-origin `GET` and `OPTIONS` requests because the SPA and API receive separate Cloudflare URLs. Tighten `allowedOrigins` in `infrastructure/cloudflare_api.ts` when introducing authentication or a custom domain.
 
 ## Commands
 
@@ -88,10 +97,8 @@ corepack pnpm typecheck
 corepack pnpm lint
 corepack pnpm test
 corepack pnpm format
-corepack pnpm infra:plan
+corepack pnpm plan
 ```
-
-Copy `.env.example` to `.env` when local server configuration diverges from the defaults.
 
 ## Naming
 

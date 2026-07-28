@@ -1,9 +1,14 @@
 node_modules
 .alchemy
+.dev.vars
+.dev.vars.*
+.wrangler
 .turbo
 dist
 coverage
 .env
+.env.*
+!.env.example
 .env.local
 *.log
 .DS_Store
