@@ -7,19 +7,24 @@ allowBuilds:
   msgpackr-extract: false
   workerd: true
 
+peerDependencyRules:
+  allowedVersions:
+    # Alchemy beta.65 pins 0.30.2 while its Vite plugins still declare ^0.29.0.
+    "@distilled.cloud/cloudflare": 0.30.2
+
 catalog:
   "@base-ui/react": 1.6.0
-  "@effect/atom-react": 4.0.0-beta.98
-  "@effect/platform-browser": 4.0.0-beta.98
-  "@effect/platform-node": 4.0.0-beta.98
-  "@effect/vitest": 4.0.0-beta.98
+  "@effect/atom-react": 4.0.0-beta.100
+  "@effect/platform-browser": 4.0.0-beta.100
+  "@effect/platform-node": 4.0.0-beta.100
+  "@effect/vitest": 4.0.0-beta.100
   "@eslint/js": 10.0.1
   "@types/node": 26.1.1
   "@types/react": 19.2.17
   "@types/react-dom": 19.2.3
   "@vitejs/plugin-react": 6.0.3
-  alchemy: 2.0.0-beta.63
-  effect: 4.0.0-beta.98
+  alchemy: 2.0.0-beta.65
+  effect: 4.0.0-beta.100
   eslint: 10.7.0
   eslint-plugin-react-hooks: 7.1.1
   eslint-plugin-react-refresh: 0.5.3
@@ -36,13 +41,16 @@ catalog:
   vitest: 4.1.10
 
 minimumReleaseAgeExclude:
-  - "@distilled.cloud/aws@0.29.1"
-  - "@distilled.cloud/axiom@0.29.1"
-  - "@distilled.cloud/cloudflare@0.29.1"
-  - "@distilled.cloud/core@0.29.1"
-  - "@distilled.cloud/neon@0.29.1"
-  - "@distilled.cloud/planetscale@0.29.1"
-  - alchemy@2.0.0-beta.63
+  - "@distilled.cloud/aws@0.30.2"
+  - "@distilled.cloud/axiom@0.30.2"
+  - "@distilled.cloud/cloudflare@0.30.2"
+  - "@distilled.cloud/cloudflare-rolldown-plugin@0.13.10"
+  - "@distilled.cloud/cloudflare-runtime@0.13.10"
+  - "@distilled.cloud/cloudflare-vite-plugin@0.13.10"
+  - "@distilled.cloud/core@0.30.2"
+  - "@distilled.cloud/neon@0.30.2"
+  - "@distilled.cloud/planetscale@0.30.2"
+  - alchemy@2.0.0-beta.65
 
 overrides:
   effect: "catalog:"
