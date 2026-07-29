@@ -25,7 +25,6 @@ catalog:
   alchemy: 2.0.0-beta.65
   effect: 4.0.0-beta.100
   oxlint: 1.76.0
-  prettier: 3.9.5
   react: 19.2.7
   react-dom: 19.2.7
   scheduler: 0.27.0

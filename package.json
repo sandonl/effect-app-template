@@ -14,8 +14,6 @@
     "dev:api": "turbo run dev --filter=@repo/api",
     "dev:web": "turbo run dev --filter=@repo/web",
     "destroy": "alchemy destroy",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
     "lint": "oxlint alchemy.run.ts infrastructure && turbo run lint",
     "lint:fix": "oxlint --fix .",
     "plan": "alchemy plan",
@@ -28,7 +26,6 @@
     "alchemy": "catalog:",
     "effect": "catalog:",
     "oxlint": "catalog:",
-    "prettier": "catalog:",
     "turbo": "catalog:",
     "typescript": "catalog:"
   }
