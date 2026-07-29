@@ -10,6 +10,7 @@ A deliberately small TypeScript monorepo for building a Vite web application and
 - Effect Atom and `@effect/atom-react`
 - Alchemy v2 infrastructure as Effect
 - Base UI with CSS Modules and CSS custom properties
+- Oxlint and Prettier
 - Vitest and `@effect/vitest`
 
 Effect Smol is experimental. Its packages are pinned to one exact beta through the pnpm catalog and root overrides so upgrades are deliberate and atomic.

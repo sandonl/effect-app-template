@@ -16,23 +16,20 @@
     "destroy": "alchemy destroy",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "eslint alchemy.run.ts infrastructure && turbo run lint",
+    "lint": "oxlint alchemy.run.ts infrastructure && turbo run lint",
+    "lint:fix": "oxlint --fix .",
     "plan": "alchemy plan",
     "test": "turbo run test",
     "typecheck": "tsc --noEmit --project tsconfig.infra.json && turbo run typecheck"
   },
   "devDependencies": {
     "@effect/platform-node": "catalog:",
-    "@eslint/js": "catalog:",
     "@types/node": "catalog:",
     "alchemy": "catalog:",
     "effect": "catalog:",
-    "eslint": "catalog:",
-    "eslint-plugin-react-hooks": "catalog:",
-    "eslint-plugin-react-refresh": "catalog:",
+    "oxlint": "catalog:",
     "prettier": "catalog:",
     "turbo": "catalog:",
-    "typescript": "catalog:",
-    "typescript-eslint": "catalog:"
+    "typescript": "catalog:"
   }
 }

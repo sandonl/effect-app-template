@@ -7,7 +7,7 @@
     "./tokens.css": "./src/tokens.css"
   },
   "scripts": {
-    "lint": "eslint src",
+    "lint": "oxlint src",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
