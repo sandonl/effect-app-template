@@ -6,7 +6,7 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "lint": "oxlint src",
+    "lint": "NODE_OPTIONS=--experimental-strip-types oxlint src",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

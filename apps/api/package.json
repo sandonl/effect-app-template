@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsx watch --env-file-if-exists=../../.env src/main.ts",
-    "lint": "oxlint src test tsup.config.ts",
+    "lint": "NODE_OPTIONS=--experimental-strip-types oxlint src test tsup.config.ts",
     "start": "node --env-file-if-exists=../../.env dist/main.js",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"

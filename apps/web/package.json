@@ -5,7 +5,7 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite",
-    "lint": "oxlint src vite.config.ts",
+    "lint": "NODE_OPTIONS=--experimental-strip-types oxlint src vite.config.ts",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   },

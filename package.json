@@ -14,14 +14,15 @@
     "dev:api": "turbo run dev --filter=@repo/api",
     "dev:web": "turbo run dev --filter=@repo/web",
     "destroy": "alchemy destroy",
-    "lint": "oxlint alchemy.run.ts infrastructure && turbo run lint",
-    "lint:fix": "oxlint --fix .",
+    "lint": "NODE_OPTIONS=--experimental-strip-types oxlint alchemy.run.ts infrastructure && turbo run lint",
+    "lint:fix": "NODE_OPTIONS=--experimental-strip-types oxlint --fix .",
     "plan": "alchemy plan",
     "test": "turbo run test",
     "typecheck": "tsc --noEmit --project tsconfig.infra.json && turbo run typecheck"
   },
   "devDependencies": {
     "@effect/platform-node": "catalog:",
+    "@oxlint/plugins": "catalog:",
     "@types/node": "catalog:",
     "alchemy": "catalog:",
     "effect": "catalog:",
