@@ -4,7 +4,7 @@ A deliberately small TypeScript monorepo for building a Vite web application and
 
 ## Stack
 
-- pnpm workspaces and Turborepo
+- Bun workspaces and Turborepo
 - Effect v4 (Smol) HTTP API
 - Vite and React
 - Effect Atom and `@effect/atom-react`
@@ -13,7 +13,7 @@ A deliberately small TypeScript monorepo for building a Vite web application and
 - Oxlint with generic and Effect-specific [anti-slop](https://github.com/dmmulroy/anti-slop) rules
 - Vitest and `@effect/vitest`
 
-Effect Smol is experimental. Its packages are pinned to one exact beta through the pnpm catalog and root overrides so upgrades are deliberate and atomic.
+Effect Smol is experimental. Its packages are pinned to one exact beta through the Bun catalog and root overrides so upgrades are deliberate and atomic.
 
 ## Workspace
 
@@ -54,16 +54,16 @@ This repository is ready as a minimal application template. It intentionally pro
 
 ## Getting started
 
-The repository pins Node and pnpm versions. Use Corepack for every pnpm command.
+The repository pins Bun and Node versions.
 
 ```sh
-corepack pnpm install
-corepack pnpm dev
+bun install
+bun run dev
 ```
 
 The web application runs at `http://localhost:5173`. Vite proxies `/api` requests to the Effect server at `http://localhost:3000`.
 
-The root `dev` command uses Turbo to run every workspace package that declares a persistent `dev` task. Run one application through the same task graph with `corepack pnpm dev:web` or `corepack pnpm dev:api`.
+The root `dev` command uses Turbo to run every workspace package that declares a persistent `dev` task. Run one application through the same task graph with `bun run dev:web` or `bun run dev:api`.
 
 ## Cloudflare deployment
 
@@ -72,19 +72,19 @@ The root `dev` command uses Turbo to run every workspace package that declares a
 Normal install, local development, build, test, and typecheck commands never provision cloud resources. Local development remains provider-independent:
 
 ```sh
-corepack pnpm dev
+bun run dev
 ```
 
 To use Cloudflare-backed development or deployment, authenticate Alchemy once, then explicitly run the relevant command:
 
 ```sh
-corepack pnpm exec alchemy login alchemy.run.ts
-corepack pnpm cloudflare:dev
-corepack pnpm plan
-corepack pnpm deploy
+bunx alchemy login alchemy.run.ts
+bun run cloudflare:dev
+bun run plan
+bun run deploy
 ```
 
-Remove deployed resources with `corepack pnpm destroy`.
+Remove deployed resources with `bun run destroy`.
 
 The deployed API URL is passed to Vite as `VITE_API_URL`. This is public configuration embedded in the browser bundle, not a secret. Never put API tokens, account IDs, credentials, or other sensitive values in a `VITE_*` variable. Alchemy keeps provider profiles outside the repository in `~/.alchemy/profiles.json`; `.alchemy`, `.dev.vars*`, `.wrangler`, and local environment files are ignored.
 
@@ -93,11 +93,11 @@ The template permits cross-origin `GET` and `OPTIONS` requests because the SPA a
 ## Commands
 
 ```sh
-corepack pnpm build
-corepack pnpm typecheck
-corepack pnpm lint
-corepack pnpm test
-corepack pnpm plan
+bun run build
+bun run typecheck
+bun run lint
+bun run test
+bun run plan
 ```
 
 ## Naming
