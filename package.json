@@ -14,6 +14,7 @@
       "@effect/platform-browser": "4.0.0-beta.100",
       "@effect/platform-bun": "4.0.0-beta.100",
       "@effect/platform-node": "4.0.0-beta.100",
+      "@effect/tsgo": "0.38.0",
       "@effect/vitest": "4.0.0-beta.100",
       "@oxlint/plugins": "1.80.0",
       "@types/node": "26.1.1",
@@ -23,13 +24,14 @@
       "alchemy": "2.0.0-beta.65",
       "effect": "4.0.0-beta.100",
       "oxlint": "1.80.0",
+      "oxlint-tsgolint": "7.0.2001",
       "react": "19.2.7",
       "react-dom": "19.2.7",
       "scheduler": "0.27.0",
       "tsup": "8.5.1",
       "tsx": "4.23.1",
       "turbo": "2.10.5",
-      "typescript": "6.0.3",
+      "typescript": "7.0.2",
       "vite": "8.1.4",
       "vitest": "4.1.10"
     }
@@ -58,17 +60,20 @@
     "lint": "NODE_OPTIONS=--experimental-strip-types oxlint alchemy.run.ts infrastructure && turbo run lint",
     "lint:fix": "NODE_OPTIONS=--experimental-strip-types oxlint --fix .",
     "plan": "alchemy plan",
+    "prepare": "effect-tsgo patch --typescript --oxlint",
     "test": "turbo run test",
     "typecheck": "tsc --noEmit --project tsconfig.infra.json && turbo run typecheck"
   },
   "devDependencies": {
     "@effect/platform-bun": "catalog:",
     "@effect/platform-node": "catalog:",
+    "@effect/tsgo": "catalog:",
     "@oxlint/plugins": "catalog:",
     "@types/node": "catalog:",
     "alchemy": "catalog:",
     "effect": "catalog:",
     "oxlint": "catalog:",
+    "oxlint-tsgolint": "catalog:",
     "turbo": "catalog:",
     "typescript": "catalog:"
   }

@@ -11,6 +11,7 @@ A deliberately small TypeScript monorepo for building a Vite web application and
 - Alchemy v2 infrastructure as Effect
 - Base UI with CSS Modules and CSS custom properties
 - Oxlint with generic and Effect-specific [anti-slop](https://github.com/dmmulroy/anti-slop) rules
+- Effect TSGO for type-aware Effect diagnostics and editor support
 - Vitest and `@effect/vitest`
 
 Effect Smol is experimental. Its packages are pinned to one exact beta through the Bun catalog and root overrides so upgrades are deliberate and atomic.
@@ -64,6 +65,14 @@ bun run dev
 The web application runs at `http://localhost:5173`. Vite proxies `/api` requests to the Effect server at `http://localhost:3000`.
 
 The root `dev` command uses Turbo to run every workspace package that declares a persistent `dev` task. Run one application through the same task graph with `bun run dev:web` or `bun run dev:api`.
+
+## Effect language tooling
+
+`@effect/tsgo` adds Effect-aware checks that ordinary TypeScript and syntax linting cannot perform, such as finding unhandled Effect errors, missing services, floating Effects, and duplicate Effect package versions.
+
+`bun install` runs the `prepare` script, which connects Effect TSGO to TypeScript and Oxlint. Oxlint runs the Effect correctness preset alongside the existing anti-slop rules. Editor diagnostics are disabled in the language-service configuration so the same finding is not shown twice; Oxlint remains the single lint command.
+
+VS Code-based editors will recommend the TypeScript 7 and Oxc extensions, use the workspace-pinned Effect TSGO language server, and show the type-aware Oxlint findings. Other editors need to be configured to use `effect-tsgo` and Oxlint as language servers.
 
 ## Cloudflare deployment
 

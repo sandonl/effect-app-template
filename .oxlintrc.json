@@ -1,5 +1,6 @@
 {
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "$schema": "./node_modules/@effect/tsgo/oxlint-schema.json",
+  "extends": ["./node_modules/@effect/tsgo/oxlint-presets/correctness.json"],
   "plugins": ["oxc", "typescript", "unicorn", "react"],
   "jsPlugins": [
     {
@@ -48,6 +49,14 @@
       }
     ]
   },
+  "overrides": [
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx"],
+      "rules": {
+        "effecttsgo/strict-effect-provide": "off"
+      }
+    }
+  ],
   "ignorePatterns": [
     ".agent/**",
     ".agents/**",

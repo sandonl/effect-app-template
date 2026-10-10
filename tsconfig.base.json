@@ -1,4 +1,5 @@
 {
+  "$schema": "./node_modules/@effect/tsgo/schema.json",
   "compilerOptions": {
     "allowJs": false,
     "exactOptionalPropertyTypes": true,
@@ -14,6 +15,12 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "ES2023",
-    "verbatimModuleSyntax": true
+    "verbatimModuleSyntax": true,
+    "plugins": [
+      {
+        "name": "@effect/language-service",
+        "diagnostics": false
+      }
+    ]
   }
 }
