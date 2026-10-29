@@ -3,7 +3,7 @@ import {
   HttpApi,
   HttpApiEndpoint,
   HttpApiGroup,
-} from "effect/unstable/httpapi";
+} from "effect/http-api";
 
 export const HealthResponse = Schema.Struct({
   status: Schema.Literal("ok"),

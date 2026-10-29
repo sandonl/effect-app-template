@@ -1,6 +1,6 @@
 import { BrowserHttpClient } from "@effect/platform-browser";
 import { AppApi } from "@repo/http-api";
-import { AtomHttpApi } from "effect/unstable/reactivity";
+import { AtomHttpApi } from "effect/reactivity";
 import { apiBaseUrl } from "./public_config";
 
 export class AppApiClient extends AtomHttpApi.Service<AppApiClient>()(

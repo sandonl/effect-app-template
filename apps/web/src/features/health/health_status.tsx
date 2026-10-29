@@ -1,6 +1,6 @@
 import { useAtomRefresh, useAtomValue } from "@effect/atom-react";
 import { Button } from "@repo/ui/button";
-import { AsyncResult } from "effect/unstable/reactivity";
+import { AsyncResult } from "effect/reactivity";
 import { healthAtom } from "./health_atoms";
 import styles from "./health_status.module.css";
 

@@ -1,9 +1,14 @@
-import * as Cloudflare from "alchemy/Cloudflare";
+import * as Cloudflare from "@alchemy.run/cloudflare";
 import { Effect, Layer, Path } from "effect";
-import { Etag, HttpPlatform, HttpRouter } from "effect/unstable/http";
+import { Etag, HttpPlatform, HttpRouter } from "effect/http";
 import { ApiLive } from "../apps/api/src/api_layer";
 
 const CloudflareHttpPlatformLive = Layer.succeed(HttpPlatform.HttpPlatform, {
+  platform: "web",
+  compression: HttpPlatform.makeCompressionWeb({
+    algorithms: ["gzip", "deflate"],
+    transform: HttpPlatform.compressionTransformWeb,
+  }),
   fileResponse: () =>
     Effect.die("HttpPlatform.fileResponse is unavailable in a Worker"),
   fileWebResponse: () =>

@@ -2,8 +2,8 @@ import { NodeHttpServer } from "@effect/platform-node";
 import { AppApi } from "@repo/http-api";
 import { expect, it } from "@effect/vitest";
 import { Effect, Layer } from "effect";
-import { HttpRouter } from "effect/unstable/http";
-import { HttpApiBuilder, HttpApiClient } from "effect/unstable/httpapi";
+import { HttpRouter } from "effect/http";
+import { HttpApiBuilder, HttpApiClient } from "effect/http-api";
 import { HealthHandlersLive } from "../src/handlers/health_handler";
 
 it.effect(

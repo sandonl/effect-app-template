@@ -1,6 +1,6 @@
 import { AppApi, type HealthResponseType } from "@repo/http-api";
 import { Effect } from "effect";
-import { HttpApiBuilder } from "effect/unstable/httpapi";
+import { HttpApiBuilder } from "effect/http-api";
 
 export const HealthHandlersLive = HttpApiBuilder.group(
   AppApi,
