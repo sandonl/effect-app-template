@@ -76,7 +76,13 @@ The root `dev` command uses Turbo to run every workspace package that declares a
 
 VS Code-based editors will recommend the TypeScript 7 and Oxc extensions, use the workspace-pinned Effect TSGO language server, and show the type-aware Oxlint findings. Other editors need to be configured to use `effect-tsgo` and Oxlint as language servers.
 
-## Function-size lint policy
+## Anti-slop lint policies
+
+The local plugins reject repeated reducer-accumulator copies and manual `_tag`
+branching. Prefer a fresh, locally owned accumulator, selective Effect error
+handlers, and `Match` or `Predicate.isTagged` helpers. Oxlint's built-in
+`oxc/no-accumulating-spread` covers reducer spread copies alongside the custom
+non-spread rule. See the [policies and limits](./tools/oxlint/anti-slop/README.md).
 
 The custom `anti-slop/min-function-body-lines` rule requires at least three
 code-bearing body lines for standalone functions and ordinary methods. It targets

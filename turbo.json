@@ -10,7 +10,12 @@
       "persistent": true
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^lint"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "$TURBO_ROOT$/.oxlintrc.json",
+        "$TURBO_ROOT$/tools/oxlint/anti-slop/**"
+      ]
     },
     "test": {
       "dependsOn": ["^test"]
