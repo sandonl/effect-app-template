@@ -66,7 +66,8 @@
     "lint:fix": "NODE_OPTIONS=--experimental-strip-types oxlint --fix .",
     "plan": "alchemy plan",
     "prepare": "effect-tsgo patch --typescript --oxlint",
-    "test": "turbo run test",
+    "test": "bun run test:lint-rules && turbo run test",
+    "test:lint-rules": "node --test tools/oxlint/anti-slop/tests/*.test.mjs",
     "typecheck": "tsc --noEmit --project tsconfig.infra.json && turbo run typecheck"
   },
   "devDependencies": {

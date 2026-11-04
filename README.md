@@ -76,6 +76,18 @@ The root `dev` command uses Turbo to run every workspace package that declares a
 
 VS Code-based editors will recommend the TypeScript 7 and Oxc extensions, use the workspace-pinned Effect TSGO language server, and show the type-aware Oxlint findings. Other editors need to be configured to use `effect-tsgo` and Oxlint as language servers.
 
+## Function-size lint policy
+
+The custom `anti-slop/min-function-body-lines` rule requires at least three
+code-bearing body lines for standalone functions and ordinary methods. It targets
+trivial extracted wrappers, not short framework callbacks or React composition.
+Do not add filler to satisfy it: inline unnecessary wrappers, or document an
+intentional boundary with a narrow suppression. See the [counting rules,
+exceptions and tests](./tools/oxlint/anti-slop/README.md).
+
+Run `bun run test:lint-rules` for the real Oxlint fixture tests; `bun run test`
+also runs them before the workspace tests.
+
 ## Cloudflare deployment
 
 [Alchemy v2](https://alchemy.run/) is installed at the workspace root and exactly pinned alongside Effect. [`alchemy.run.ts`](./alchemy.run.ts) is the deployment composition root. It deploys the Effect HTTP API as a Cloudflare Worker and the Vite SPA as a Cloudflare Website, with Cloudflare-backed Alchemy state.
