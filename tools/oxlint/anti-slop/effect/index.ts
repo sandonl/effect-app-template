@@ -2,7 +2,9 @@ import { eslintCompatPlugin } from "@oxlint/plugins";
 
 import { noManualEffectErrorTagRule } from "./rules/no-manual-effect-error-tag.ts";
 import { noManualTagComparisonRule } from "./rules/no-manual-tag-comparison.ts";
+import { noOrDieInServiceConstructionRule } from "./rules/no-ordie-in-service-construction.ts";
 import { noServiceConstructorImportsRule } from "./rules/no-service-constructor-imports.ts";
+import { requireCauseWhenNarrowingRule } from "./rules/require-cause-when-narrowing.ts";
 
 /** Opt-in Oxlint rules for Effect service and Layer architecture. */
 const antiSlopEffectPlugin = eslintCompatPlugin({
@@ -10,7 +12,9 @@ const antiSlopEffectPlugin = eslintCompatPlugin({
 	rules: {
 		"no-manual-effect-error-tag": noManualEffectErrorTagRule,
 		"no-manual-tag-comparison": noManualTagComparisonRule,
+		"no-ordie-in-service-construction": noOrDieInServiceConstructionRule,
 		"no-service-constructor-imports": noServiceConstructorImportsRule,
+		"require-cause-when-narrowing": requireCauseWhenNarrowingRule,
 	},
 });
 

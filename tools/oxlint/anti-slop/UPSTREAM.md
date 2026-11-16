@@ -21,3 +21,29 @@ The existing `min-function-body-lines` rule is local. Preserve it and existing
 rules when updating selected upstream files; do not replace this directory
 wholesale. This revision describes only the files listed above, not the earlier
 vendored rules.
+
+## Selected rules from Kyle Mistele's fork
+
+The following files were adapted from [K-Mistele/anti-slop](https://github.com/K-Mistele/anti-slop)
+at commit [`b7c1619b4d51b4815e89ba3700a975a6ec54b8c3`](https://github.com/K-Mistele/anti-slop/tree/b7c1619b4d51b4815e89ba3700a975a6ec54b8c3/src):
+
+- `rules/max-ternary-depth.ts`
+- `rules/no-disabled-type-assertion-rules.ts`
+- `rules/no-reprovide-ambient-service.ts`
+- `effect/rules/no-ordie-in-service-construction.ts`
+- `effect/rules/require-cause-when-narrowing.ts`
+- `effect/shared/effect-modules.ts`
+- `martinfowler/rules/global-data.ts`
+- `martinfowler/rules/mutable-data.ts`
+- `martinfowler/rules/mysterious-name.ts`
+- `martinfowler/shared.ts`
+
+The upstream MIT notice matches the retained [LICENSE](./LICENSE).
+Local adaptations omit unused shared helpers, reset the ambient-service rule's
+import names before each file, and register only the three selected Fowler rules
+in a local `martinfowler/index.ts`. The CLI fixtures in
+`tests/selected-rules.test.mjs` are local and use the root configuration's
+registration, options and severities.
+
+`docs/agents/testing.md` adapts the fork's `test-cannot-fail` review question at
+the same revision. No Jev plugin, model runner or model dependencies are copied.

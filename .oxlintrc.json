@@ -10,6 +10,10 @@
     {
       "name": "anti-slop-effect",
       "specifier": "./tools/oxlint/anti-slop/effect/index.ts"
+    },
+    {
+      "name": "anti-slop-martinfowler",
+      "specifier": "./tools/oxlint/anti-slop/martinfowler/index.ts"
     }
   ],
   "categories": {
@@ -17,15 +21,18 @@
     "suspicious": "error"
   },
   "rules": {
+    "anti-slop/max-ternary-depth": ["error", { "maxDepth": 2 }],
     "anti-slop/min-function-body-lines": "error",
     "anti-slop/no-chained-type-assertions": "error",
     "anti-slop/no-conditional-empty-object-spread": "error",
+    "anti-slop/no-disabled-type-assertion-rules": "error",
     "anti-slop/no-known-value-widening": "error",
     "anti-slop/no-module-mocking": "error",
     "anti-slop/no-object-parameters": "error",
     "anti-slop/no-reduce-accumulator-copy": "error",
     "anti-slop/no-reflect-apply": "error",
     "anti-slop/no-reflect-get": "error",
+    "anti-slop/no-reprovide-ambient-service": "error",
     "anti-slop/no-runtime-typeof": "error",
     "anti-slop/no-shape-in-symbol-names": "error",
     "anti-slop/no-unknown-parameters": "error",
@@ -37,6 +44,11 @@
     "anti-slop-effect/no-service-constructor-imports": "error",
     "anti-slop-effect/no-manual-effect-error-tag": "error",
     "anti-slop-effect/no-manual-tag-comparison": "error",
+    "anti-slop-effect/no-ordie-in-service-construction": "error",
+    "anti-slop-effect/require-cause-when-narrowing": "error",
+    "anti-slop-martinfowler/global-data": "warn",
+    "anti-slop-martinfowler/mutable-data": "warn",
+    "anti-slop-martinfowler/mysterious-name": "warn",
     "oxc/no-accumulating-spread": "error",
     "no-underscore-dangle": [
       "error",

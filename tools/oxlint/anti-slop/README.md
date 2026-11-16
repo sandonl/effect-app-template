@@ -1,5 +1,41 @@
 # Anti-slop lint policies
 
+## Selected fork rules
+
+Five additional checks are errors:
+
+| Rule | Purpose |
+| --- | --- |
+| `anti-slop/max-ternary-depth` | Limit connected ternaries to two levels. |
+| `anti-slop/no-disabled-type-assertion-rules` | Reject inline disables of assertion safeguards and disable comments that name no rule. Use a justified file override for an exceptional assertion policy. |
+| `anti-slop/no-reprovide-ambient-service` | Keep a yielded dependency in Effect's requirements instead of supplying that same value again with `provideService`. Dynamically constructed implementations remain allowed. |
+| `anti-slop-effect/no-ordie-in-service-construction` | Retain typed failures during service construction; reject `Layer.orDie` anywhere outside test files. Operation-local `Effect.orDie` remains permitted. |
+| `anti-slop-effect/require-cause-when-narrowing` | Flag an error handler that ignores its input and constructs a replacement error without a `cause` or an earlier error tap. |
+
+Three Fowler rules run as warnings: `global-data` flags exported mutable state,
+`mutable-data` flags private module bindings reassigned by functions, and
+`mysterious-name` flags vague top-level function names and same-file function
+aliases. Treat these as review prompts: choose a change only when it improves
+the code. They skip test files and test directories by default.
+
+These checks inspect syntax and same-file bindings. The cause rule does not
+prove preservation of the original error: reading the error, passing an object
+spread or a `cause` property, or using an earlier error tap can satisfy its
+heuristic. Imported handlers and indirect constructors can be missed. The
+ambient-service rule recognizes direct imports and direct yielded bindings,
+not every alias or flow. Construction detection follows recognized service and
+Layer syntax; its test exemption covers `*.test.*` and `*.spec.*` filenames.
+
+Oxlint's suppression mechanism also applies to the anti-disable rule itself.
+A blanket next-line disable is reported at the comment, but a file-wide blanket
+disable or an explicit disable of this rule can silence it. Review those
+directives rather than treating the rule as a tamper-proof guard.
+
+The [test review guidance](../../../docs/agents/testing.md) uses the fork's
+`test-cannot-fail` question without adding a model-based lint step.
+The selected rules work with the existing matching Oxlint and plugin versions;
+their CLI fixtures run through `bun run test:lint-rules`.
+
 ## Reducer copies and tagged values
 
 These rules are errors in the root Oxlint configuration:
