@@ -84,6 +84,12 @@ handlers, and `Match` or `Predicate.isTagged` helpers. Oxlint's built-in
 `oxc/no-accumulating-spread` covers reducer spread copies alongside the custom
 non-spread rule. See the [policies and limits](./tools/oxlint/anti-slop/README.md).
 
+Additional checks limit nested ternaries, protect assertion safeguards, and
+flag lost error causes, hidden startup failures and redundant dependency wiring.
+Selected Fowler checks warn about shared mutable state and vague names. See the
+same policy reference for their limits, and the
+[test review guidance](./docs/agents/testing.md) for meaningful assertions.
+
 The custom `anti-slop/min-function-body-lines` rule requires at least three
 code-bearing body lines for standalone functions and ordinary methods. It targets
 trivial extracted wrappers, not short framework callbacks or React composition.
