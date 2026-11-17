@@ -6,7 +6,7 @@ export function App() {
     <main className={styles.shell}>
       <section className={styles.card}>
         <p className={styles.eyebrow}>Monorepo template</p>
-        <h1>Vite meets Effect</h1>
+        <h1>TanStack Start meets Effect</h1>
         <p className={styles.description}>
           A small vertical slice connecting React, Effect Atom, a typed HTTP
           contract, and an Effect-managed client runtime.

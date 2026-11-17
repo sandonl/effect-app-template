@@ -89,6 +89,7 @@
     "tools/oxlint/anti-slop/**",
     "**/coverage/**",
     "**/dist/**",
+    "**/routeTree.gen.ts",
     "**/node_modules/**"
   ]
 }
