@@ -1,12 +1,12 @@
 # Effect app template
 
-A deliberately small TypeScript monorepo for building a Vite web application and an Effect HTTP server from one shared contract.
+A deliberately small TypeScript monorepo for building a TanStack Start web application and an Effect HTTP server from one shared contract.
 
 ## Stack
 
 - Bun workspaces and Turborepo
 - Effect v4 HTTP API
-- Vite and React
+- TanStack Start, TanStack Router, Vite and React
 - Effect Atom and `@effect/atom-react`
 - Alchemy v2 infrastructure as Effect
 - Base UI with CSS Modules and CSS custom properties
@@ -21,7 +21,7 @@ Effect packages are pinned to one exact version through the Bun catalog and root
 ```text
 apps/
 ├── api/                 Effect HTTP API and local Node adapter
-└── web/                 Vite React application and browser composition root
+└── web/                 TanStack Start application and file-based routes
 infrastructure/           Cloudflare runtime adapters
 packages/
 ├── http_api/            Shared schemas and HTTP endpoint descriptions
@@ -36,6 +36,7 @@ Both `apps/*` and `packages/*` are workspace packages. Internal dependencies use
 - `apps/api/src/api_layer.ts` composes the platform-neutral HTTP API and handlers.
 - `apps/api/src/main.ts` is the local Node execution edge. It launches one root layer and lets Effect own process signals and resource cleanup.
 - `infrastructure/cloudflare_api.ts` adapts that same API layer to a Cloudflare Worker's `fetch` interface.
+- `apps/web/src/router.tsx` creates a router per application instance; `src/routes/__root.tsx` owns the document and providers, and `src/routes/index.tsx` serves the home page.
 - `apps/web/src/api_client.ts` defines the browser HTTP client as an `AtomHttpApi.Service`. Effect Atom builds its layer and exposes typed query and mutation atoms.
 - `apps/web/src/app/app_providers.tsx` owns the React `RegistryProvider`, which scopes atom state, running fibers, and cleanup to the application.
 - `packages/http_api` describes the HTTP interface but never creates or runs a runtime.
@@ -47,7 +48,8 @@ Create and compose Effects inside application code. Run them only at application
 
 This repository is ready as a minimal application template. It intentionally provides one complete read path rather than preselecting application architecture that every product may not need.
 
-- The web application is a browser-only SPA. SSR, routing, and hydration are not configured.
+- TanStack Start is the preferred web framework. File-based routes live in `apps/web/src/routes`; Start owns the document and hydration. SPA mode keeps route content browser-rendered and prerenders the root shell to `dist/client/index.html`.
+- The default deployment uses the SPA shell. Start server functions and request-time SSR are not part of this template; configure server hosting before adding them.
 - Effect Atom owns request state, but the template does not impose retry, polling, focus-refetch, or long-lived cache policies.
 - The health endpoint demonstrates a query. Add mutation and reactivity-key invalidation only when the first write use case exists.
 - Cloudflare is the default deployment provider. Authentication, persistence, observability, custom domains, and CI remain application decisions.
@@ -67,6 +69,14 @@ bun run dev
 The web application runs at `http://localhost:5173`. Vite proxies `/api` requests to the Effect server at `http://localhost:3000`.
 
 The root `dev` command uses Turbo to run every workspace package that declares a persistent `dev` task. Run one application through the same task graph with `bun run dev:web` or `bun run dev:api`.
+
+## Web routes
+
+Prefer TanStack Start for new web features. Add route files under `apps/web/src/routes`; `bun run dev:web` and `bun run build` regenerate `src/routeTree.gen.ts`. Commit that generated file so a fresh checkout can typecheck before starting Vite. Do not edit it by hand.
+
+The API client uses relative URLs locally and `VITE_API_URL` when deployed. It does not access browser globals during module loading, because Start also loads modules while building the SPA shell.
+
+See the [Start setup guide](https://tanstack.com/start/latest/docs/framework/react/build-from-scratch) and [SPA mode](https://tanstack.com/start/latest/docs/framework/react/guide/spa-mode).
 
 ## Effect language tooling
 
@@ -102,7 +112,7 @@ also runs them before the workspace tests.
 
 ## Cloudflare deployment
 
-[Alchemy v2](https://alchemy.run/) is installed at the workspace root and exactly pinned alongside Effect. [`alchemy.run.ts`](./alchemy.run.ts) is the deployment composition root. It deploys the Effect HTTP API as a Cloudflare Worker and the Vite SPA as a Cloudflare Website, with Cloudflare-backed Alchemy state.
+[Alchemy v2](https://alchemy.run/) is installed at the workspace root and exactly pinned alongside Effect. [`alchemy.run.ts`](./alchemy.run.ts) is the deployment composition root. It deploys the Effect HTTP API as a Cloudflare Worker and the TanStack Start app as a Cloudflare Website, with Cloudflare-backed Alchemy state.
 
 Normal install, local development, build, test, and typecheck commands never provision cloud resources. Local development remains provider-independent:
 
@@ -137,4 +147,4 @@ bun run plan
 
 ## Naming
 
-React files and directories use snake case. React components, TypeScript types, and Effect layer/schema/API descriptors use PascalCase to match their ecosystems; ordinary functions and variables use camelCase.
+React files and directories use snake case, except framework conventions such as `__root.tsx` and the generated `routeTree.gen.ts`. React components, TypeScript types, and Effect layer/schema/API descriptors use PascalCase to match their ecosystems; ordinary functions and variables use camelCase.

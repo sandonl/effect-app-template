@@ -4,6 +4,7 @@ node_modules
 .dev.vars.*
 .wrangler
 .turbo
+.tanstack
 dist
 coverage
 .env
