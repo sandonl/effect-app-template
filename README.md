@@ -59,7 +59,7 @@ This repository is ready as a minimal application template. It intentionally pro
 
 The repository pins Bun and Node versions.
 
-Use Bun 1.4.4 and the Node 22.23.4 version in `.node-version`. The supported Node ranges are `^22.22.3 || ^24.11.1 || >=26.0.0`, covering the updated Alchemy CLI and build tooling requirements.
+Use Bun 1.4.4 and the Node 22.23.5 version in `.node-version`. The supported Node ranges are `^22.22.3 || ^24.11.1 || >=26.0.0`, covering the updated Alchemy CLI and build tooling requirements.
 
 ```sh
 bun install
